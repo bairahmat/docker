@@ -26,7 +26,9 @@ Gambar di atas menjelaskan sekilas tentang arsitektur dalam docker swarm, di man
   selanjutnya cek docker-machine anda dengan menggunakan perintah docker-machine ls
   <p align="center"><img src="images/3.png"/><br>Gambar 1.3</p>
 ## How to join
+  Join di gunakan untuk menggabungkan beberapa node dan menjadikan salah satu sebagi leader.
 ### konfigurasi pada manager
+
   * docker swarm init –advertise-addr (ip address manager)
     ip ini saya ambil dari ip virtual-box saya.
 
@@ -53,7 +55,26 @@ Gambar di atas menjelaskan sekilas tentang arsitektur dalam docker swarm, di man
   `docker node ls`
   <p align="center"><img src="images/9.png"/><br>Gambar 1.9</p>
 ## Deploy service to Docker-Swarm
-
+  Untuk menjalankan service hal pertama yang harus anda punya adalah image App yang akan di jalankan, pada panduan ini saya menggunakan images saya sendiri yaitu `jiharalgifari/web-nginx:v1` yang saya akan jadikan sebuah service. berikut inmplementasinya
+  `docker service create --name web-saya -p 80:80 --replicas 2 jiharalgifari/web-nginx:v1`
+  perintah di atas bermaksud untuk menjalankan service dengan nama `web-saya` yang akan di publish ke port 80 dengan replicas 2.
+  untuk mengecek service yang berjalan bisa menggunakan perintah `docker service ls`
+  <p align="center"><img src="images/10.png"/><br>Gambar 1.10</p>
+  selanjutnya kita bisa mengecek service yang berjalan di setiap node1
+  1. Pada komputer lokal localhost (localhost:80)
+    <p align="center"><img src="images/11.png"/><br>Gambar 1.11</p>
+  2. pada node1 (http://192.168.99.100/)
+    <p align="center"><img src="images/12.png"/><br>Gambar 1.12</p>
+  3. pada node2 (http://192.168.99.101/)
+    <p align="center"><img src="images/13.png"/><br>Gambar 1.13</p>
+  4. pada node3 (http://192.168.99.102/)
+    <p align="center"><img src="images/14.png"/><br>Gambar 1.14</p>
 ## How to scale
+
+untuk melakukan scale service anda bisa menggunakan perintah `docker service scale web-saya=8`
+dan untuk mengecek hasil scale bisa menggunakan perintah `docker service ps web-saya`
+di sini kita bisa melihat node apa apa saja yang menangani service, nama image yang jalan, dan waktu ketika service start.
+berikut penjelasan gambarnya:
+<p align="center"><img src="images/15.png"/><br>Gambar 1.14</p>
 
 ## Configuring resource
