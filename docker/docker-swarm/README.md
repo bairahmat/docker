@@ -23,14 +23,34 @@ Gambar di atas menjelaskan sekilas tentang arsitektur dalam docker swarm, di man
       * docker-machine create --driver virtualbox node3
     Jika di setiap node anda ingin mengatur resourcenya, seperti hdd, ram, processor dll. bisa menggunakan perintah di bawah ini
       * docker-machine create --driver virtualbox --virtualbox-memory "512" --virtualbox-disk-size "5000" node4
+
     selanjutnya cek docker-machine anda dengan menggunakan perintah docker-machine ls
-      <p align="center"><img src="images/3.png"/><br>Gambar 1.3</p>
+
+    <p align="center"><img src="images/3.png"/><br>Gambar 1.3</p>
 ## How to join
 ### konfigurasi pada manager
   * docker swarm init –advertise-addr (ip address manager)
-  * docker swarm join-token -q worker
+    ip ini saya ambil dari ip virtual-box saya.
+
+    <p align="center"><img src="images/4.png"/><br>Gambar 1.4</p>
+
+    jalanakan perintah berikut untuk melakukan inisialisasi
+    <p align="center"><img src="images/5.png"/><br>Gambar 1.5</p>
+    `docker swarm init --advertise-addr 192.168.99.1`
+
+    jalanakan perintah berikut untuk mengecek token
+    <p align="center"><img src="images/6.png"/><br>Gambar 1.6</p>
+    `docker swarm join-token -q worker`
+
 ### konfigurasi pada node untuk melakukan join.
+  akses ke stiap node untuk melakukan join
+  `docker-machine ssh nama node`
+    <p align="center"><img src="images/7.png"/><br>Gambar 1.7</p>
   * docker swarm join (ip address manager):2377 --token(token pada manager)
+    `docker swarm join 192.168.99.1:2377 --token SWMTKN-1-0aj4hqxy0gb04kq29r6kcxh8v3mz8z6k0wccpwftnvkv4lxtcp-cuexjpxih5oyycypc85u5ropv`
+
+  <p align="center"><img src="images/8.png"/><br>Gambar 1.8</p>
+
 ## Deploy service to Docker-Swarm
 
 ## How to scale
