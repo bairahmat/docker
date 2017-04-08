@@ -16,17 +16,15 @@ Gambar di atas menjelaskan sekilas tentang arsitektur dalam docker swarm, di man
   jika sudah berhasil kita bisa mengeceknya menggunakan perintah di atas untuk cek versi docker-machine
   <p align="center"><img src="images/2.png"/><br>Gambar 1.2</p>
 ## How to create node on docker-machine
-    Untuk membuat node pada docker-machine, di sistem anda harus terinstall virtual machine seperti (virtual box, qemu, vmware, dll), untuk tutorial ini saya menggunakan virtual box.
-    barikut cara membuat workers atau node dalam virtual machine:
-      * docker-machine create --driver virtualbox node1
-      * docker-machine create --driver virtualbox node2
-      * docker-machine create --driver virtualbox node3
-    Jika di setiap node anda ingin mengatur resourcenya, seperti hdd, ram, processor dll. bisa menggunakan perintah di bawah ini
-      * docker-machine create --driver virtualbox --virtualbox-memory "512" --virtualbox-disk-size "5000" node4
-
-    selanjutnya cek docker-machine anda dengan menggunakan perintah docker-machine ls
-
-    <p align="center"><img src="images/3.png"/><br>Gambar 1.3</p>
+  Untuk membuat node pada docker-machine, di sistem anda harus terinstall virtual machine seperti (virtual box, qemu, vmware, dll), untuk tutorial ini saya menggunakan virtual box.
+  barikut cara membuat workers atau node dalam virtual machine:
+    * docker-machine create --driver virtualbox node1
+    * docker-machine create --driver virtualbox node2
+    * docker-machine create --driver virtualbox node3
+  Jika di setiap node anda ingin mengatur resourcenya, seperti hdd, ram, processor dll. bisa menggunakan perintah di bawah ini
+    * docker-machine create --driver virtualbox --virtualbox-memory "512" --virtualbox-disk-size "5000" node4
+  selanjutnya cek docker-machine anda dengan menggunakan perintah docker-machine ls
+  <p align="center"><img src="images/3.png"/><br>Gambar 1.3</p>
 ## How to join
 ### konfigurasi pada manager
   * docker swarm init –advertise-addr (ip address manager)
@@ -39,18 +37,21 @@ Gambar di atas menjelaskan sekilas tentang arsitektur dalam docker swarm, di man
     `docker swarm init --advertise-addr 192.168.99.1`
 
     jalanakan perintah berikut untuk mengecek token
+
     <p align="center"><img src="images/6.png"/><br>Gambar 1.6</p>
+
     `docker swarm join-token -q worker`
 
 ### konfigurasi pada node untuk melakukan join.
   akses ke stiap node untuk melakukan join
   `docker-machine ssh nama node`
-    <p align="center"><img src="images/7.png"/><br>Gambar 1.7</p>
+  <p align="center"><img src="images/7.png"/><br>Gambar 1.7</p>
   * docker swarm join (ip address manager):2377 --token(token pada manager)
     `docker swarm join 192.168.99.1:2377 --token SWMTKN-1-0aj4hqxy0gb04kq29r6kcxh8v3mz8z6k0wccpwftnvkv4lxtcp-cuexjpxih5oyycypc85u5ropv`
-
   <p align="center"><img src="images/8.png"/><br>Gambar 1.8</p>
-
+  selanjutnya cek status node pada CLI anda untuk mengetahui leader dan workers, gunakan perintah
+  `docker node ls`
+  <p align="center"><img src="images/9.png"/><br>Gambar 1.9</p>
 ## Deploy service to Docker-Swarm
 
 ## How to scale
