@@ -76,6 +76,7 @@ selanjutnya cek docker-machine anda dengan menggunakan perintah docker-machine l
 
 ## Deploy service to Docker-Swarm
 
+#### Deploy menggunakan images docker.
   Untuk menjalankan service hal pertama yang harus anda punya adalah image App yang akan di jalankan, pada panduan ini saya menggunakan images saya sendiri yaitu `jiharalgifari/web-nginx:v1` yang saya akan jadikan sebuah service. berikut implementasinya
 
   `docker service create --name web-saya -p 80:80 --replicas 2 jiharalgifari/web-nginx:v1`
@@ -97,6 +98,60 @@ selanjutnya cek docker-machine anda dengan menggunakan perintah docker-machine l
 
   4. pada node3 (http://192.168.99.102/)
     <p align="center"><img src="images/14.png"/><br>Gambar 1.14</p>
+
+#### Deploy menggunakan docker compose
+Jika anda ingin menjalankan service yang ada dalam docker compose gunakan perintah di bawah ini:
+  ~~~bash
+    docker stack deploy
+  ~~~
+**Demo menggunakan wordpress**
+
+Untuk menjalankan service dalam docker swarm minimal docker-compose.yml nya versi 3.0 berikut contohnnya
+~~~yml
+version: '3.0'
+
+services:
+   db:
+     image: mysql:5.7
+     volumes:
+       - db_data:/var/lib/mysql
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: wordpress
+       MYSQL_DATABASE: wordpress
+       MYSQL_USER: wordpress
+       MYSQL_PASSWORD: wordpress
+
+   wordpress:
+     depends_on:
+       - db
+     image: wordpress:latest
+     ports:
+       - "8000:80"
+     restart: always
+     environment:
+       WORDPRESS_DB_HOST: db:3306
+       WORDPRESS_DB_PASSWORD: wordpress
+volumes:
+    db_data:
+~~~
+
+sebelumnya coba anda menjalankan secara manual, untuk memastikan apakah docker composenya jalan atau tidak.
+
+`docker-compose up`
+
+jika sudah jalan anda bisa berpindah ke docker swarm. sebelumnya anda harus mematika semua service yang ada dulu menggunakan perintah `docker stop $(docker ps -a -q)` agar tidak ada tabrakan saat menjalankan service. berikut adalah contoh sebelum menggunakan swarm:
+  <p align="center"><img src="images/18.png"/><br>Gambar 1.15</p>
+
+
+Sekarang kita akan menjalankan service docker-compose dalam swarm.
+1. docker stack deploy --compose-file docker-compose.yml web
+<p align="center"><img src="images/19.png"/></p>
+2. docker stack ls
+  <p align="center"><img src="images/20.png"/></p>
+3. selanjutnya anda bisa mengeceknya melalui browser seperti (chrome, firefox) dengan memanggil ip:port (192.168.99.100:8000) atau node lainya. berdasarkan ip. berikut contoh dalam localhost:8000.  <p align="center"><img src="images/18.png"/></p>
+
+
 
 ## How to scale
 
