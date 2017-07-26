@@ -1,6 +1,9 @@
 # Responsi Teknologi Cloud Computing Lanjut (TCCL)
 Impletasi sistem daftar dan login menggunakan Golang dan database MongoDB
 
+### Arsitektur aplikasi
+![Image](gambar/7.png)
+
 
 ### Membuat image dari aplikasi yang di bangun menggunakan file Dockerfile.
 ~~~Dockerfile
@@ -63,3 +66,7 @@ sudo docker-compose up --build
 ![Gambar3](gambar/3.png)
 #### Tampilan ketika berhasil login
 ![Gambar4](gambar/4.png)
+
+
+## Lain-lain.
+[Presentasi](https://www.slideshare.net/JiharAlGifari/docker-engine-indroduc) Pengenalan Docker
