@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:v-bin="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <title>Home</title>
+    <!-- <link rel="stylesheet" href="/public/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="/public/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/public/css/w3.css">
+    <link rel="stylesheet" href="/public/css/main.css">
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/emojione/2.2.6/assets/css/emojione.min.css"/>
+    <link rel="stylesheet" href="public/css/style.css">
+
+  </head>
+  <script type="text/javascript">
+      window.onload = function () {
+          var conn;
+          var msg = document.getElementById("msg");
+          var log = document.getElementById("log");
+          function appendLog(item) {
+              var doScroll = log.scrollTop > log.scrollHeight - log.clientHeight - 1;
+              log.appendChild(item);
+              if (doScroll) {
+                  log.scrollTop = log.scrollHeight - log.clientHeight;
+              }
+          }
+          document.getElementById("form").onsubmit = function () {
+              if (!conn) {
+                  return false;
+              }
+              if (!msg.value) {
+                  return false;
+              }
+              conn.send(msg.value);
+              msg.value = "";
+              return false;
+          };
+          if (window["WebSocket"]) {
+              conn = new WebSocket("ws://" + document.location.host + "/ws");
+              conn.onclose = function (evt) {
+                  var item = document.createElement("div");
+                  item.innerHTML = "<b>Connection closed.</b>";
+                  appendLog(item);
+              };
+              conn.onmessage = function (evt) {
+                  var messages = evt.data.split('\n');
+                  for (var i = 0; i < messages.length; i++) {
+                      var item = document.createElement("div");
+                      item.innerText = messages[i];
+                      appendLog(item);
+                  }
+              };
+          } else {
+              var item = document.createElement("div");
+              item.innerHTML = "<b>Your browser does not support WebSockets.</b>";
+              appendLog(item);
+          }
+      };
+  </script>
+<body>
+<main id="app">
+<div class="w3-bar w3-border w3-green w3-xlarge w3-top">
+    <a href="/" class="w3-bar-item w3-button" style="width:20%">KANCIO CHAT</a>
+    <input type="text" class="w3-bar-item w3-input" style="width:55%" placeholder="Cari..">
+    <a href="#" class="w3-bar-item w3-button w3-green" style="width:8%">Cari</a>
+    <div class="w3-dropdown-click w3-right">
+      <button class="w3-button" onclick="w3_open()">
+        Menu lain <i class="fa fa-caret-down"></i>
+      </button>
+    </div>
+</div>
+
+<!-- konten -->
+<div class="w3-container" style="margin-top:5%; margin-bottom:10%">
+  <!-- Sidebar kanan-->
+  <div class="w3-container w3-sidebar w3-bar-block w3-card-2" style="width:18%;right:0;">
+    <div class="w3-sidebar w3-bar-block w3-border-right" style="display:none" id="mySidebar">
+      <button onclick="w3_close()" class="w3-bar-item w3-large">Keluar &times;</button>
+      <a href="#" class="w3-bar-item w3-button">Akun saya</a>
+      <a href="#" class="w3-bar-item w3-button">Buat Grup</a>
+      <a href="logout" class="w3-bar-item w3-button">Keluar</a>
+    </div>
+    <div class="w3-container" style="margin-top:5%; margin-bottom:10%">
+      {{range .Index}}
+      <ul class="w3-ul">
+        <a href="/{{.Username}}">
+          <li class="w3-button w3-bar">
+            <img src="public/image/{{.Image}}" class="w3-left w3-margin-right" style="width:25px">
+            <span class="w3-left">{{.Nama}}</span>
+          </li>
+        </a>
+      </ul>
+      {{end}}
+    </div>
+  </div>
+  <!-- Sidebar kiri-->
+  <div class="w3-sidebar w3-bar-block w3-card-2" style="width:20%;left:0; padding-top:10px;">
+  <div class="w3-container">
+    <div class="w3-card-4">
+      {{range .Index}}
+      <img src="/public/image/{{.Image}}" alt="Norway" style="width:100%">
+      <div class="w3-container w3-center">
+        <h3>{{.Nama}}</h3>
+      </div>
+      <ul class="w3-ul w3-border">
+        <li>{{.Username}}</li>
+        <li>{{.Email}}</li>
+        <li>{{.Jk}}</li>
+      </ul>
+    </div>
+    {{end}}
+  </div><hr>
+  </div>
+
+  <div style="margin-left:20%; width:60%">
+    {{range .Index}}
+    <ul class="w3-ul w3-card-4">
+      <li class="w3-padding-16">
+        <img src="/public/image/logo3.png" class="w3-left w3-circle w3-margin-right" style="width:50px">
+        <span class="w3-large">Mike</span><br>
+        <span>Web Designer</span>
+        <span class="w3-right">3.10 PM</span>
+      </li>
+    </ul><br>
+    <ul class="w3-ul w3-card-4">
+      <li class="w3-padding-16 w3-right-align">
+        <img src="/public/image/{{.Image}}" class="w3-right w3-circle w3-margin-left" style="width:50px">
+        <span class="w3-large">{{.Username}}</span><br>
+        <span>Support</span>
+        <span class="w3-left">3.10 PM</span>
+      </li>
+    </ul><br>
+    {{end}}
+  </div>
+
+<!-- Bottom -->
+<div class="w3-container w3-bottom w3-green" style="margin-left:20%; width:60%">
+      <!--<div class="w3-container w3-card-4">-->
+        <!--<input class="w3-input" type="text" v-model="newMsg" @keyup.enter="send">-->
+      <!--</div>-->
+
+</div>
+
+</main>
+<script>
+function myFunction() {
+    var x = document.getElementById("demo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+}
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+}
+</script>
+<!-- <script src="/public/js/chat.js"></script> -->
+  <script src="https://unpkg.com/vue@2.1.3/dist/vue.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/emojione/2.2.6/lib/js/emojione.min.js"></script>
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js"></script>
+  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>-->
+  <!--<script src="public/js/chat.js"></script>-->
+  </body>
+</html>

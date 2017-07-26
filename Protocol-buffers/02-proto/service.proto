@@ -1,0 +1,19 @@
+syntax = "proto3";
+option go_package = "echo";
+
+package echo;
+
+import "google/api/annotations.proto";
+
+message Message {
+  string id = 1;
+  string msg = 2;
+}
+
+service EchoService {
+  rpc Echo(Message) returns (Message) {
+    option (google.api.http) = {
+      post : "/v1/example/echo/{id}/{msg}"
+    };
+  }
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/public/css/w3.css">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/public/js/bootstrap.min.js"></script>
+  </head>
+  <style>
+    html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+
+    input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  </style>
+  <body class="w3-light-grey">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Kancio</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <form class="navbar-form navbar-center">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Cari kontak">
+        </div>
+        <button type="submit" class="btn btn-default">Cari</button>
+      </form>
+    </ul>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Akun saya</a></li>
+            <li><a href="#">Buat Grup</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="/logout">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+  </nav>
+  <div class="w3-content w3-margin-top" style="max-width:1400px;">
+    <div class="w3-row-padding">
+      <div class="w3-third">
+        <div class="w3-white w3-text-grey w3-card-3">
+          <div class="w3-display-container">
+            <img src="/public/image/avatar_hat.jpg" style="width:100%" alt="Avatar">
+            <div class="w3-display-bottomleft w3-container w3-text-black">
+              <h2>Jane Doe</h2>
+            </div>
+          </div>
+          <br>
+          <div class="w3-container">
+          </div>
+        </div><br>
+      <!-- End Left Column -->
+      </div>
+      <!-- Right Column -->
+      <div class="w3-twothird">
+        <div class="w3-container w3-card-2 w3-white w3-margin-bottom">
+          <h2 class="w3-text-grey w3-padding-16">
+            <i class="fa fa-suitcase fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>Work Experience
+          </h2>
+        </div>
+        <ul class="w3-ul w3-card-4">
+          <li class="w3-padding-16">
+            <img src="/public/image/logo3.png" class="w3-left w3-circle w3-margin-right" style="width:50px">
+            <span class="w3-large">Mike</span><br>
+            <span>Web Designer</span>
+          </li>
+          <li class="w3-padding-16 w3-right-align">
+            <img src="/public/image/logo3.png" class="w3-right w3-circle w3-margin-left" style="width:50px">
+            <span class="w3-large">Jill</span><br>
+            <span>Support</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  </body>
+</html>
